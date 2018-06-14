@@ -1,0 +1,15 @@
+version: '2'
+services:
+    webpageelementanalyser-app:
+        image: webpageelementanalyser
+        environment:
+            # - _JAVA_OPTIONS=-Xmx512m -Xms256m
+            - SPRING_PROFILES_ACTIVE=prod,swagger
+            - SPRING_DATASOURCE_URL=jdbc:mariadb://webpageelementanalyser-mariadb:3306/webpageelementanalyser
+            - JHIPSTER_SLEEP=10 # gives time for the database to boot before the application
+        ports:
+            - 8080:8080
+    webpageelementanalyser-mariadb:
+        extends:
+            file: mariadb.yml
+            service: webpageelementanalyser-mariadb

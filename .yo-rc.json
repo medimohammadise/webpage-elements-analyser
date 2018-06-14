@@ -1,0 +1,31 @@
+{
+  "generator-jhipster": {
+    "promptValues": {
+      "packageName": "com.scout24.techchalenge.webpageanalyserapp"
+    },
+    "jhipsterVersion": "5.0.0-beta.2",
+    "applicationType": "monolith",
+    "baseName": "WebPageElementAnalyser",
+    "packageName": "com.scout24.techchalenge.webpageanalyserapp",
+    "packageFolder": "com/scout24/techchalenge/webpageanalyserapp",
+    "serverPort": "8080",
+    "authenticationType": "jwt",
+    "cacheProvider": "no",
+    "websocket": false,
+    "databaseType": "sql",
+    "devDatabaseType": "h2Disk",
+    "prodDatabaseType": "mariadb",
+    "searchEngine": false,
+    "messageBroker": false,
+    "serviceDiscoveryType": false,
+    "buildTool": "maven",
+    "enableSwaggerCodegen": false,
+    "jwtSecretKey": "214abfad0405017a9bfa24611f9ae98547aeef35",
+    "clientFramework": "angularX",
+    "useSass": false,
+    "clientPackageManager": "yarn",
+    "testFrameworks": [],
+    "jhiPrefix": "jhi",
+    "enableTranslation": false
+  }
+}
