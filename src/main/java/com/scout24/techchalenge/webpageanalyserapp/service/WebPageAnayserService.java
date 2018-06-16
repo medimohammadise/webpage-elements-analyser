@@ -1,6 +1,8 @@
 package com.scout24.techchalenge.webpageanalyserapp.service;
 
 import com.scout24.techchalenge.webpageanalyserapp.service.dto.WebPageDocumentMetaDataDTO;
+import com.scout24.techchalenge.webpageanalyserapp.web.rest.errors.InputDataInvalidException;
+import org.apache.commons.validator.routines.UrlValidator;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.DocumentType;
@@ -22,6 +24,9 @@ public class WebPageAnayserService {
     String url;
     private final Logger log = LoggerFactory.getLogger(getClass());
     public void coonectToDocument(String url) throws IOException{
+        String[] schemes = {"http","https"};
+        UrlValidator urlValidator = new UrlValidator(schemes);
+        if (!urlValidator.isValid(url)) throw new InputDataInvalidException();
         this.document=Jsoup.connect(url).get();
         this.url=url;
     }

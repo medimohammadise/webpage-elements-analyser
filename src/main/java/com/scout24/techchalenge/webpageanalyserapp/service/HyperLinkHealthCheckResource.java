@@ -15,6 +15,8 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
@@ -44,12 +46,16 @@ public class HyperLinkHealthCheckResource {
                                                                                                 public HyperLinksHealthStatus apply(Element element) {
 
                                                                                                     try {
-                                                                                                        return checkResource(url, element.absUrl("href")).get();
-                                                                                                    } catch (InterruptedException e) {
-                                                                                                        e.printStackTrace();
-                                                                                                    } catch (ExecutionException e) {
-                                                                                                        e.printStackTrace();
-                                                                                                    }
+                                                                                                        try {
+                                                                                                            return checkResource(url, element.absUrl("href")).get();
+                                                                                                        } catch (MalformedURLException e) {
+                                                                                                            e.printStackTrace();
+                                                                                                        }
+                                                                                                        } catch (InterruptedException e) {
+                                                                                                            e.printStackTrace();
+                                                                                                        } catch (ExecutionException e) {
+                                                                                                             e.printStackTrace();
+                                                                                                        }
                                                                                                     return new HyperLinksHealthStatus();
                                                                                                 }
                                                                                             }
@@ -62,9 +68,10 @@ public class HyperLinkHealthCheckResource {
     }
 
     @Async
-    public CompletableFuture<HyperLinksHealthStatus> checkResource(String url, String hyperLinkUrl) {
+    public CompletableFuture<HyperLinksHealthStatus> checkResource(String url, String hyperLinkUrl) throws MalformedURLException {
         hyperLinkUrl = hyperLinkUrl.replace("../", "");  //remove relative addresss part because we are extracting absolutePath
-        log.info("processing url " + hyperLinkUrl);
+        URL hyperLinkURI = new URL(hyperLinkUrl);
+
         Connection.Response response = null;
         String resourceCheckErrorMessage = "";
         HyperLinksHealthStatus hyperLinksHealthStatus = null;
@@ -75,14 +82,14 @@ public class HyperLinkHealthCheckResource {
         } finally {
             if (response != null)
                 hyperLinksHealthStatus = new HyperLinksHealthStatus(hyperLinkUrl,
-                    false,
+                    ("https".equals(hyperLinkURI.getProtocol())?true:false),
                     response.statusCode(),
                     response.hasHeader("location"),
                     response.header("location"),
                     resourceCheckErrorMessage);
             else
                 hyperLinksHealthStatus = new HyperLinksHealthStatus(hyperLinkUrl,
-                    false,
+                    ("https".equals(hyperLinkURI.getProtocol())?true:false),
                     0,
                     false,
                     "",

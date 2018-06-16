@@ -341,6 +341,11 @@
             <artifactId>spring-boot-starter-webflux</artifactId>
             <version>2.0.3.RELEASE</version>
         </dependency>
+        <dependency>
+            <groupId>commons-validator</groupId>
+            <artifactId>commons-validator</artifactId>
+            <version>1.6</version>
+        </dependency>
 
     </dependencies>
 

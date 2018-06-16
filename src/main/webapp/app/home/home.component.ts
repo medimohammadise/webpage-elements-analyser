@@ -14,30 +14,40 @@ export class HomeComponent implements OnInit {
     account: Account;
     modalRef: NgbModalRef;
     url: string;
+    errorProcessingRequest: boolean = false;
+    errorMessage: String;
     webPageDcoumentMetaData: IWebPageDcoumentMetaData;
     hyperLinksHealthStatus: IHyperLinksHealthStatus;
+    metaDataAnalyseInProgress: boolean = false;
+    hyperLinkHealthAnalysisInProgress: boolean = false;
     constructor(private webPageAnalyseService: WebPageAnalyseService, private eventManager: JhiEventManager) {}
     analyse() {
-        console.log('analyse ...' + this.url);
+        this.webPageDcoumentMetaData = null;
+        this.hyperLinksHealthStatus = null;
+        this.metaDataAnalyseInProgress = true;
         this.webPageAnalyseService.getWebPageMetaData(this.url).subscribe(
             data => {
                 this.webPageDcoumentMetaData = data.body;
-                console.log(this.webPageDcoumentMetaData);
+                this.metaDataAnalyseInProgress = false;
             },
             error => {
-                if (error.status === 503) {
-                }
+                this.errorProcessingRequest = true;
+                this.errorMessage = error.title;
+                this.metaDataAnalyseInProgress = false;
+                console.log('metaDataAnalyseInProgress ' + this.metaDataAnalyseInProgress);
             }
         );
-
+        this.hyperLinkHealthAnalysisInProgress = true;
         this.webPageAnalyseService.gethyperLinksHealthData(this.url).subscribe(
             data => {
                 this.hyperLinksHealthStatus = data.body;
                 console.log(this.hyperLinksHealthStatus);
+                this.hyperLinkHealthAnalysisInProgress = false;
             },
             error => {
-                if (error.status === 503) {
-                }
+                this.errorProcessingRequest = true;
+                this.errorMessage = error.title;
+                this.hyperLinkHealthAnalysisInProgress = false;
             }
         );
     }

@@ -1,6 +1,10 @@
 <div class="row justify-content-center">
     <div class="col-12">
-
+        <div class="col-md-8">
+            <div class="alert alert-danger" *ngIf="errorProcessingRequest">
+                <strong>Server failed to process the reuqest!</strong> {{errorMessage}}
+            </div>
+        </div>
         <div class="input-group">
             <input type="text" class="form-control" placeholder="Webpage URL" [(ngModel)]="url" required>
             <span class="input-group-btn">
@@ -11,10 +15,14 @@
         </div>
 
         <div class="col-12">
+            <h3>
+                    <span> Anayse result for </span> [<b>{{url}}</b>]
+            </h3>
+            <div class="justify-content-center" *ngIf="metaDataAnalyseInProgress">
+                <img src="../../content/images/searching.gif" />
+            </div>
             <div *ngIf="webPageDcoumentMetaData">
-                <h2>
-                    <span> Anayse Result for </span> [<b>{{url}}</b>]
-                </h2>
+
                 <dl class="row-md jh-entity-details">
                     <dt><span>Html Version</span></dt>
                     <dd>
@@ -48,7 +56,21 @@
                                 </span>
                             </li>
                         </ul>-->
-                         <table class="table table-striped">
+
+                    </dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-12">
+     <h3>
+        <span> Hyperlink health check
+    </h3>
+    <div class="justify-content-center" *ngIf="hyperLinkHealthAnalysisInProgress">
+                <img src="../../content/images/searching.gif" />
+     </div>
+     <table class="table table-striped" *ngIf="hyperLinksHealthStatus">
                                 <thead>
                                 <tr>
                                     <th><span>URL</span> <fa-icon [icon]="'sort'"></fa-icon></th>
@@ -76,10 +98,5 @@
                                 </tr>
                                 </tbody>
                         </table>
-                    </dd>
-                </dl>
-
-            </button>
-            </div>
-        </div>
+</div>
     </div>
