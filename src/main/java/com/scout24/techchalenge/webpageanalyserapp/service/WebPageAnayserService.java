@@ -1,6 +1,6 @@
 package com.scout24.techchalenge.webpageanalyserapp.service;
 
-import liquibase.logging.LogFactory;
+import com.scout24.techchalenge.webpageanalyserapp.service.dto.WebPageDocumentMetaDataDTO;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.DocumentType;
@@ -8,22 +8,25 @@ import org.jsoup.nodes.Node;
 import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
-
+@Service
 public class WebPageAnayserService {
     Document document;
     String url;
     private final Logger log = LoggerFactory.getLogger(getClass());
-    public WebPageAnayserService(String url) throws IOException{
+    public void coonectToDocument(String url) throws IOException{
         this.document=Jsoup.connect(url).get();
         this.url=url;
     }
 
-    public String getHtmlVersion(){
+    private String getHtmlVersion(){
         return document.childNodes().stream().filter(node->node instanceof DocumentType).map(this::generateHtmlVersion).collect(Collectors.joining());
     }
     private String generateHtmlVersion(Node node)
@@ -32,11 +35,11 @@ public class WebPageAnayserService {
         //log.info("htmlVersion"+ htmlVersion);
         return "".equals(htmlVersion) ? "5": htmlVersion;
     }
-    public String getPageTitle(){
+    private String getPageTitle(){
         return document.title();
     }
 
-    public Map<String,Integer> getNumberofHeading(){
+    private Map<String,Integer> getNumberofHeading(){
         // Group of all h-Tags
         Map<String,Integer> numberOfHeadingGroupByHeadingLevel=new HashMap<>();
         numberOfHeadingGroupByHeadingLevel.put("h1", document.select("h1").size());
@@ -47,11 +50,15 @@ public class WebPageAnayserService {
         numberOfHeadingGroupByHeadingLevel.put("h6", document.select("h6").size());
         return numberOfHeadingGroupByHeadingLevel;
     }
-    public Map<String,Integer> getNumberofExternalInternalHyperLinks(){
-        // Group of all h-Tags
+    private Map<String,Integer> getNumberofExternalInternalHyperLinks() throws MalformedURLException {
+        URL aURL = new URL(document.baseUri());
+        String domain = aURL.getHost();
+
         Map<String,Integer> numberOfHeadingGroupByHeadingLevel=new HashMap<>();
-        numberOfHeadingGroupByHeadingLevel.put("Internal Domain Links", document.select("a[href*="+"www.elizabethcastro.com"+"]").size());
-        numberOfHeadingGroupByHeadingLevel.put("External Domain Links", document.select("a[href]:not(:has("+"www.elizabethcastro.com"+"))").size());
+        numberOfHeadingGroupByHeadingLevel.put("Internal Domain Links",  document.select("a").stream().filter(hrefElement->hrefElement.absUrl("href").contains(domain)).collect(Collectors.toList()).size()
+        );
+        numberOfHeadingGroupByHeadingLevel.put("External Domain Links",  document.select("a").stream().filter(hrefElement->!hrefElement.absUrl("href").contains(domain)).collect(Collectors.toList()).size()
+        );
 
         return numberOfHeadingGroupByHeadingLevel;
     }
@@ -61,16 +68,12 @@ public class WebPageAnayserService {
 
     }
 
-    /*public static void main(String[] args){
-        WebPageAnayserService webPageAnayserService;
-        try {
-            webPageAnayserService = new WebPageAnayserService("http://www.elizabethcastro.com/");
-            webPageAnayserService.log.info("HTML Version : "+webPageAnayserService.getHtmlVersion());
-            webPageAnayserService.log.info("Title        : "+webPageAnayserService.getPageTitle());
-            webPageAnayserService.getNumberofHeading().forEach((header,number)->System.out.println(header+" "+number));
-            webPageAnayserService.getNumberofExternalInternalHyperLinks().forEach((header,number)->System.out.println(header+" "+number));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }*/
+    public WebPageDocumentMetaDataDTO analyseWebPage(String url) throws IOException {
+
+        this.coonectToDocument(url);
+        return new WebPageDocumentMetaDataDTO(getHtmlVersion(),getPageTitle(),getNumberofHeading(),getNumberofExternalInternalHyperLinks().get("Internal Domain Links"),
+            getNumberofExternalInternalHyperLinks().get("External Domain Links"),false,null);
+
+    }
+
 }

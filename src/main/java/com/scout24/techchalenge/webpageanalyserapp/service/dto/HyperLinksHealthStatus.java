@@ -2,17 +2,17 @@ package com.scout24.techchalenge.webpageanalyserapp.service.dto;
 
 import org.springframework.http.HttpStatus;
 
-public class HyperLinksStatus {
+public class HyperLinksHealthStatus {
     private String url;
     private boolean https;
     private int httpStatus;
     private boolean redirect;
     private String redirectURL;
     private String resourceException;
-    public HyperLinksStatus(){
+    public HyperLinksHealthStatus(){
 
     }
-    public HyperLinksStatus(String url, boolean https, int httpStatus, boolean redirect, String redirectURL, String resourceException) {
+    public HyperLinksHealthStatus(String url, boolean https, int httpStatus, boolean redirect, String redirectURL, String resourceException) {
         this.url = url;
         this.https = https;
         this.httpStatus = httpStatus;
@@ -71,7 +71,7 @@ public class HyperLinksStatus {
 
     @Override
     public String toString() {
-        return "HyperLinksStatus{" +
+        return "HyperLinksHealthStatus{" +
             "url='" + url + '\'' +
             ", https=" + https +
             ", httpStatus=" + httpStatus +
