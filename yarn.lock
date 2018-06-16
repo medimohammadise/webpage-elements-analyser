@@ -25,6 +25,12 @@
     "@angular-devkit/core" "0.6.0"
     rxjs "^6.0.0"
 
+"@angular/animations@^6.0.5":
+  version "6.0.5"
+  resolved "https://registry.yarnpkg.com/@angular/animations/-/animations-6.0.5.tgz#3964bc2a60facf3c3b417925c4a395b3f44abb94"
+  dependencies:
+    tslib "^1.9.0"
+
 "@angular/cli@6.0.0":
   version "6.0.0"
   resolved "https://registry.yarnpkg.com/@angular/cli/-/cli-6.0.0.tgz#346b356775ddf8cdb8a9a5095b0663878eca3486"

@@ -19,8 +19,6 @@ import { WebPageElementAnalyserEntityModule } from './entities/entity.module';
 // jhipster-needle-angular-add-module-import JHipster will add new module here
 import { JhiMainComponent, NavbarComponent, FooterComponent, PageRibbonComponent, ErrorComponent } from './layouts';
 import { WebPageAnalyseService } from './service/webpageanalyse.service';
-import { CommonModule } from '@angular/common';
-
 @NgModule({
     imports: [
         BrowserModule,
@@ -30,8 +28,7 @@ import { CommonModule } from '@angular/common';
         WebPageElementAnalyserCoreModule,
         WebPageElementAnalyserHomeModule,
         WebPageElementAnalyserAccountModule,
-        WebPageElementAnalyserEntityModule,
-        CommonModule
+        WebPageElementAnalyserEntityModule
     ],
     declarations: [JhiMainComponent, NavbarComponent, ErrorComponent, PageRibbonComponent, FooterComponent],
     providers: [
@@ -61,6 +58,7 @@ import { CommonModule } from '@angular/common';
             deps: [Injector]
         }
     ],
-    bootstrap: [JhiMainComponent]
+    bootstrap: [JhiMainComponent],
+    exports: []
 })
 export class WebPageElementAnalyserAppModule {}
