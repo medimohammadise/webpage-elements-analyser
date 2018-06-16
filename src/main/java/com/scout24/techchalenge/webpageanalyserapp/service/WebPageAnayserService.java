@@ -72,7 +72,7 @@ public class WebPageAnayserService {
 
         this.coonectToDocument(url);
         return new WebPageDocumentMetaDataDTO(getHtmlVersion(),getPageTitle(),getNumberofHeading(),getNumberofExternalInternalHyperLinks().get("Internal Domain Links"),
-            getNumberofExternalInternalHyperLinks().get("External Domain Links"),false,null);
+            getNumberofExternalInternalHyperLinks().get("External Domain Links"),LoginFormDetector.lookForLoginForm(url),LoginFormDetector.attemptForLogin(url));
 
     }
 

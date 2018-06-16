@@ -10,16 +10,18 @@ public class WebPageDocumentMetaDataDTO {
     private int numberOfInternalLinks;
     private int numberOfExternalLinks;
     private boolean hasLoginForm;
-    private HyperLinksHealthStatus hyperLinksHealthStatus;
+    private boolean loginAttemptSucessFull;
 
-    public WebPageDocumentMetaDataDTO(String htmlVersion, String title, Map<String, Integer> numberOfHeadingByGroupLevelMap, int numberOfInternalLinks, int numberOfExternalLinks, boolean hasLoginForm, HyperLinksHealthStatus hyperLinksHealthStatus) {
+
+    public WebPageDocumentMetaDataDTO(String htmlVersion, String title, Map<String, Integer> numberOfHeadingByGroupLevelMap, int numberOfInternalLinks, int numberOfExternalLinks, boolean hasLoginForm,
+                                      boolean loginAttemptSucessFull) {
         this.htmlVersion = htmlVersion;
         this.title = title;
         this.numberOfHeadingByGroupLevelMap = numberOfHeadingByGroupLevelMap;
         this.numberOfInternalLinks = numberOfInternalLinks;
         this.numberOfExternalLinks = numberOfExternalLinks;
         this.hasLoginForm = hasLoginForm;
-        this.hyperLinksHealthStatus = hyperLinksHealthStatus;
+        this.loginAttemptSucessFull=loginAttemptSucessFull;
     }
 
     public String getHtmlVersion() {
@@ -70,11 +72,11 @@ public class WebPageDocumentMetaDataDTO {
         this.hasLoginForm = hasLoginForm;
     }
 
-    public HyperLinksHealthStatus getHyperLinksHealthStatus() {
-        return hyperLinksHealthStatus;
+    public boolean isLoginAttemptSucessFull() {
+        return loginAttemptSucessFull;
     }
 
-    public void setHyperLinksHealthStatus(HyperLinksHealthStatus hyperLinksHealthStatus) {
-        this.hyperLinksHealthStatus = hyperLinksHealthStatus;
+    public void setLoginAttemptSucessFull(boolean loginAttemptSucessFull) {
+        this.loginAttemptSucessFull = loginAttemptSucessFull;
     }
 }
