@@ -1,7 +1,5 @@
 package com.scout24.techchalenge.webpageanalyserapp.service.dto;
 
-import org.springframework.http.HttpStatus;
-
 public class HyperLinksHealthStatus {
     private String url;
     private boolean https;

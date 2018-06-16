@@ -10,14 +10,16 @@ import { AuthInterceptor } from './blocks/interceptor/auth.interceptor';
 import { AuthExpiredInterceptor } from './blocks/interceptor/auth-expired.interceptor';
 import { ErrorHandlerInterceptor } from './blocks/interceptor/errorhandler.interceptor';
 import { NotificationInterceptor } from './blocks/interceptor/notification.interceptor';
-import { WebPageElementAnalyserSharedModule } from 'app/shared';
-import { WebPageElementAnalyserCoreModule } from 'app/core';
+import { WebPageElementAnalyserSharedModule } from './shared';
+import { WebPageElementAnalyserCoreModule } from './core';
 import { WebPageElementAnalyserAppRoutingModule } from './app-routing.module';
 import { WebPageElementAnalyserHomeModule } from './home/home.module';
 import { WebPageElementAnalyserAccountModule } from './account/account.module';
 import { WebPageElementAnalyserEntityModule } from './entities/entity.module';
 // jhipster-needle-angular-add-module-import JHipster will add new module here
 import { JhiMainComponent, NavbarComponent, FooterComponent, PageRibbonComponent, ErrorComponent } from './layouts';
+import { WebPageAnalyseService } from './service/webpageanalyse.service';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
     imports: [
@@ -28,11 +30,12 @@ import { JhiMainComponent, NavbarComponent, FooterComponent, PageRibbonComponent
         WebPageElementAnalyserCoreModule,
         WebPageElementAnalyserHomeModule,
         WebPageElementAnalyserAccountModule,
-        WebPageElementAnalyserEntityModule
-        // jhipster-needle-angular-add-module JHipster will add new module here
+        WebPageElementAnalyserEntityModule,
+        CommonModule
     ],
     declarations: [JhiMainComponent, NavbarComponent, ErrorComponent, PageRibbonComponent, FooterComponent],
     providers: [
+        WebPageAnalyseService,
         {
             provide: HTTP_INTERCEPTORS,
             useClass: AuthInterceptor,

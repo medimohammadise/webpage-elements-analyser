@@ -1,41 +1,85 @@
-<div class="row">
-    <div class="col-md-3">
-        <span class="hipster img-fluid rounded"></span>
-    </div>
-    <div class="col-md-9">
-        <h1 class="display-4">Welcome, Java Hipster!</h1>
-        <p class="lead">This is your homepage</p>
+<div class="row justify-content-center">
+    <div class="col-12">
 
-        <div [ngSwitch]="isAuthenticated()">
-            <div class="alert alert-success" *ngSwitchCase="true">
-                <span *ngIf="account"
-                   > You are logged in as user "{{account.login}}". </span>
-            </div>
-
-            <div class="alert alert-warning" *ngSwitchCase="false">
-                <span>If you want to </span>
-                <a class="alert-link" (click)="login()">sign in</a><span>, you can try the default accounts:<br/>- Administrator (login="admin" and password="admin") <br/>- User (login="user" and password="user").</span>
-            </div>
-            <div class="alert alert-warning" *ngSwitchCase="false">
-                <span>You don't have an account yet?</span>&nbsp;
-                <a class="alert-link" routerLink="register">Register a new account</a>
-            </div>
+        <div class="input-group">
+            <input type="text" class="form-control" placeholder="Webpage URL" [(ngModel)]="url" required>
+            <span class="input-group-btn">
+                <button type="submit" (click)="analyse()" class="btn btn-primary">
+                        <fa-icon [icon]="'search'"></fa-icon>&nbsp;<span>Analyse</span>
+                </button>
+            </span>
         </div>
 
-        <p>
-            If you have any question on JHipster:
-        </p>
+        <div class="col-12">
+            <div *ngIf="webPageDcoumentMetaData">
+                <h2>
+                    <span> Anayse Result for </span> [<b>{{url}}</b>]
+                </h2>
+                <dl class="row-md jh-entity-details">
+                    <dt><span>Html Version</span></dt>
+                    <dd>
+                        <span>{{webPageDcoumentMetaData?.htmlVersion}}</span>
 
-        <ul>
-            <li><a href="https://www.jhipster.tech/" target="_blank" rel="noopener">JHipster homepage</a></li>
-            <li><a href="http://stackoverflow.com/tags/jhipster/info" target="_blank" rel="noopener">JHipster on Stack Overflow</a></li>
-            <li><a href="https://github.com/jhipster/generator-jhipster/issues?state=open" target="_blank" rel="noopener">JHipster bug tracker</a></li>
-            <li><a href="https://gitter.im/jhipster/generator-jhipster" target="_blank" rel="noopener">JHipster public chat room</a></li>
-            <li><a href="https://twitter.com/java_hipster" target="_blank" rel="noopener">follow @java_hipster on Twitter</a></li>
-        </ul>
+                    </dd>
+                    <dt><span>Title</span></dt>
+                    <dd>{{webPageDcoumentMetaData?.title}}</dd>
+                    <dt><span>Number Of Internal Links</span></dt>
+                    <dd>{{webPageDcoumentMetaData?.numberOfInternalLinks}}</dd>
+                    <dt><span>Number Of External Links</span></dt>
+                    <dd>{{webPageDcoumentMetaData?.numberOfExternalLinks}}</dd>
+                    <dt><span>Has Login Form</span></dt>
+                    <dd>
+                        <jhi-boolean [value]="webPageDcoumentMetaData?.hasLoginForm" textTrue="Yes" textFalse="No">
+                        </jhi-boolean>
+                    </dd>
+                    <dt><span>Login Form try result with any user/passsword!</span></dt>
+                    <dd>
+                        <jhi-boolean [value]="webPageDcoumentMetaData?.loginAttemptSucessFull" textTrue="Yes" textFalse="No">
+                        </jhi-boolean>
+                    </dd>
 
-        <p>
-            <span>If you like JHipster, don't forget to give us a star on</span> <a href="https://github.com/jhipster/generator-jhipster" target="_blank" rel="noopener">GitHub</a>!
-        </p>
+                    <dd>
+                        <!--<ul class="list-unstyled">
+                            <li *ngFor="let hyperLinksHealth of hyperLinksHealthStatus">
+                                <span class="badge badge-info">{{hyperLinksHealth.url}}</span>
+                                <span >
+                                    <jhi-boolean [value]="hyperLinksHealth?.https" textTrue="Yes" textFalse="No">
+                                        </jhi-boolean>
+                                </span>
+                            </li>
+                        </ul>-->
+                         <table class="table table-striped">
+                                <thead>
+                                <tr>
+                                    <th><span>URL</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+                                    <th><span>Https</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+                                    <th><span>HttpStatus</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+                                    <th><span>Redirect</span></th>
+                                    <th><span>RedirectURL</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+                                    <th><span>ResourceException</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+                                </tr>
+                                </thead>
+                                <tbody *ngIf ="hyperLinksHealthStatus">
+                                <tr *ngFor="let hyperLinksHealth of hyperLinksHealthStatus">
+                                    <td><a href="{{hyperLinksHealth.url}}">{{hyperLinksHealth.url}}</a></td>
+                                    <td>
+                                        <jhi-boolean [value]="hyperLinksHealth.https" textTrue="Yes" textFalse="No">
+                                        </jhi-boolean>
+                                    </td>
+                                    <td>{{hyperLinksHealth.httpStatus}}</td>
+                                    <td>
+                                        <jhi-boolean [value]="hyperLinksHealth.redirect" textTrue="Yes" textFalse="No">
+                                        </jhi-boolean>
+                                    </td>
+                                    <td>{{hyperLinksHealth.redirectURL}}</td>
+                                    <td>{{hyperLinksHealth.resourceException}}</td>
+                                </tr>
+                                </tbody>
+                        </table>
+                    </dd>
+                </dl>
+
+            </button>
+            </div>
+        </div>
     </div>
-</div>
