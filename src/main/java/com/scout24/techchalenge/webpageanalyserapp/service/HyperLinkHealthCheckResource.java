@@ -37,7 +37,7 @@ public class HyperLinkHealthCheckResource {
             webPageAnayserService = new WebPageAnayserService();
 
         try {
-            webPageAnayserService.coonectToDocument(url);
+            webPageAnayserService.connectToDocument(url);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -76,7 +76,7 @@ public class HyperLinkHealthCheckResource {
         String resourceCheckErrorMessage = "";
         HyperLinksHealthStatus hyperLinksHealthStatus = null;
         try {
-            response = Jsoup.connect(hyperLinkUrl).method(Connection.Method.GET).followRedirects(true).execute();
+            response = Jsoup.connect(hyperLinkUrl).method(Connection.Method.GET).validateTLSCertificates(false).followRedirects(true).execute();
         } catch (Exception e) {
             resourceCheckErrorMessage = e.getMessage();
         } finally {

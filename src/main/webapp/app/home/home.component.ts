@@ -20,11 +20,23 @@ export class HomeComponent implements OnInit {
     hyperLinksHealthStatus: IHyperLinksHealthStatus;
     metaDataAnalyseInProgress: boolean = false;
     hyperLinkHealthAnalysisInProgress: boolean = false;
+    cols: any[];
+
+    ngOnInit() {
+        this.cols = [
+            { field: 'caseId', header: 'Case Id' },
+            { field: 'caseType', header: 'Case Type' },
+            { field: 'caseCreationDate', header: 'Case Creation Date' },
+            { field: 'status', header: 'Status' },
+            { field: 'policyNumber', header: 'Policy Number' }
+        ];
+    }
     constructor(private webPageAnalyseService: WebPageAnalyseService, private eventManager: JhiEventManager) {}
     analyse() {
         this.webPageDcoumentMetaData = null;
         this.hyperLinksHealthStatus = null;
         this.metaDataAnalyseInProgress = true;
+        this.errorProcessingRequest = false;
         this.webPageAnalyseService.getWebPageMetaData(this.url).subscribe(
             data => {
                 this.webPageDcoumentMetaData = data.body;
