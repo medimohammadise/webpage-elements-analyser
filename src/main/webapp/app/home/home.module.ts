@@ -7,6 +7,7 @@ import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { TableModule } from 'primeng/table';
 import { FieldsetModule } from 'primeng/fieldset';
+import { PaginatorModule } from 'primeng/paginator';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
@@ -17,6 +18,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
         ButtonModule,
         InputTextModule,
         FieldsetModule,
+        PaginatorModule,
         BrowserAnimationsModule
     ],
     declarations: [HomeComponent],

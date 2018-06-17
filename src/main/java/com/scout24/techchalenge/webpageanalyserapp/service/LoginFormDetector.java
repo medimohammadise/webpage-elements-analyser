@@ -27,11 +27,8 @@ public class LoginFormDetector {
                 .followRedirects(true)
                 .execute();
 
-
-
         //get the cookies from the response, which we will post to the action URL
         Map<String, String> mapLoginPageCookies = loginPageResponse.cookies();
-
         Document document = loginPageResponse.parse();
         String strActionURL = document.select("form").attr("action");
         Elements inputElementsInsideForm = document.select("form").select("input");
@@ -127,7 +124,6 @@ public class LoginFormDetector {
         }
         return afterLogindocument.select("form").parallelStream().filter(element ->
             element.html().contains("Incorrect username or password")).findFirst().isPresent();
-
 
     }
 }

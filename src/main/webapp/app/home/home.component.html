@@ -1,13 +1,13 @@
 <h1>Webpage analyser application (Code Challange) </h1>
 
 <div class="alert alert-danger" *ngIf="errorProcessingRequest">
-        <strong>Server failed to process the reuqest!</strong> {{errorMessage}}
+    <strong>Server failed to process the reuqest!</strong> {{errorMessage}}
 </div>
 
-    <div class="ui-inputgroup">
-        <input type="text" pInputText placeholder="Website url" [(ngModel)]="url">
-        <span class="ui-inputgroup-addon"><button pButton type="button" label="Analyse" (click)="analyse()"></button></span>
-    </div>
+<div class="ui-inputgroup">
+    <input type="text" pInputText placeholder="Website url" [(ngModel)]="url">
+    <span class="ui-inputgroup-addon"><button pButton type="button" label="Analyse" (click)="analyse()"></button></span>
+</div>
 
 <div class="justify-content-center" *ngIf="metaDataAnalyseInProgress">
     <img src="../../content/images/searching.gif" />
@@ -53,7 +53,7 @@
 </div>
 </div>
 
-
+ <div class="ui-g-12 ui-md-12">
 <p-fieldset legend="Hyperlink health check" [toggleable]="true">
     <div class="justify-content-center" *ngIf="hyperLinkHealthAnalysisInProgress">
         <img src="../../content/images/searching.gif" />
@@ -87,3 +87,4 @@
         </ng-template>
     </p-table>
 </p-fieldset>
+ </div>

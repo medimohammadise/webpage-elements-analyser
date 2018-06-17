@@ -76,7 +76,6 @@ public class WebPageAnayserService {
     public Elements getHyperLinks() {
         // Group of all h-Tags
         return document.select("a");
-
     }
 
     public WebPageDocumentMetaDataDTO analyseWebPage(String url) throws IOException {
