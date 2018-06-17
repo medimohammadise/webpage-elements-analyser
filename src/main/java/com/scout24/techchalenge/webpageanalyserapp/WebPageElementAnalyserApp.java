@@ -1,15 +1,18 @@
 package com.scout24.techchalenge.webpageanalyserapp;
 
 import com.scout24.techchalenge.webpageanalyserapp.config.ApplicationProperties;
-import com.scout24.techchalenge.webpageanalyserapp.config.DefaultProfileUtil;
 
 import io.github.jhipster.config.JHipsterConstants;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration;
 import org.springframework.boot.autoconfigure.liquibase.LiquibaseProperties;
+import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.core.env.Environment;
 
@@ -19,6 +22,8 @@ import java.util.Arrays;
 import java.util.Collection;
 
 @SpringBootApplication
+@EnableAutoConfiguration(exclude = {DataSourceAutoConfiguration.class, DataSourceTransactionManagerAutoConfiguration.class, HibernateJpaAutoConfiguration.class})
+
 @EnableConfigurationProperties({LiquibaseProperties.class, ApplicationProperties.class})
 public class WebPageElementAnalyserApp {
 
@@ -57,7 +62,6 @@ public class WebPageElementAnalyserApp {
      */
     public static void main(String[] args) {
         SpringApplication app = new SpringApplication(WebPageElementAnalyserApp.class);
-        DefaultProfileUtil.addDefaultProfile(app);
         Environment env = app.run(args).getEnvironment();
         String protocol = "http";
         if (env.getProperty("server.ssl.key-store") != null) {
