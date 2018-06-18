@@ -15,13 +15,15 @@ Just run the following command:
     ./mvnw
  application would be availbale on 8080 port just go through this url: [http://localhost:8080/#/]
 
-##Solution description
+ ## Solution description
+
   I exposed two rest service for processing web page url:
    
  api/webPageMetaData?url={enter your web page url}
  api/hyperLinksHealth?url={enter your web page url}
  
- ###Performance consideration
+ ### Performance consideration
+
  I separated into two webservice because the second one for rich web pages (full of hyperlinks)
  is expected to take time.
  In both web services I used stream and parallelstream feature for java8 for facilitating processing and
@@ -29,8 +31,7 @@ Just run the following command:
  @Async method for checking url health. I do not wanted a thread blocked for the reason that resource is not avaiable.
  Please do check HyperLinkHealthCheckService code for more information.
  
- 
-  ###Login Form Checking
+  ### Login Form Checking
  
  Another thing that was tricky was how to check login form exists in the web page for this purpose I'm checking existance
  for password field along with other input text within form containing post actions.This solution is not 100% accurate.
@@ -38,7 +39,7 @@ Just run the following command:
  password is not valid " and for other cases I'm facing other http response code. This one also was not 110% accurate trick for 
  checking login form avilbilty but it was funny and sometimes it is working.
  
- ##Testing
+ ## Testing
    I have developed test class for back-end services using Junit and Spring Boot test features. 
  
 
