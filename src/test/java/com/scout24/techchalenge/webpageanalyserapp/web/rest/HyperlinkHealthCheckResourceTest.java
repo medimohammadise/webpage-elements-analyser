@@ -2,7 +2,6 @@ package com.scout24.techchalenge.webpageanalyserapp.web.rest;
 
 import com.scout24.techchalenge.webpageanalyserapp.WebPageElementAnalyserApp;
 import com.scout24.techchalenge.webpageanalyserapp.service.HyperLinkHealthCheckService;
-import com.scout24.techchalenge.webpageanalyserapp.service.WebPageAnayserService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,7 +12,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import static org.hamcrest.Matchers.is;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;

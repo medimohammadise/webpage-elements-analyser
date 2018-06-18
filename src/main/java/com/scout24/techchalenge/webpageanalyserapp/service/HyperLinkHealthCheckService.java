@@ -55,15 +55,11 @@ public class HyperLinkHealthCheckService {
 
 
         ).collect(Collectors.toList());
-        // CompletableFuture.allOf(t.toArray(CompletableFuture<HyperLinksHealthStatus>));
-
-
     }
 
     @Async
     public CompletableFuture<HyperLinksHealthStatus> checkResource(String url, String hyperLinkUrl) throws MalformedURLException {
         hyperLinkUrl = hyperLinkUrl.replace("../", "");  //remove relative addresss part because we are extracting absolutePath
-        //hyperLinkUrl=!hyperLinkUrl.startsWith("http://") || !hyperLinkUrl.startsWith("https://")? hyperLinkUrl
         log.info("processing url " + hyperLinkUrl);
         URL hyperLinkURI = new URL(hyperLinkUrl);
 
