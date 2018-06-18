@@ -13,7 +13,8 @@ I used following frameworks or libraries for building this application:
  ## Running the project  
 Just run the following command:
     ./mvnw
- application would be availbale on 8080 port just go through this url: [http://localhost:8080/#/]
+    
+ the application would be availbale on 8080 port just go through this url: [http://localhost:8080/#/]
 
  ## Solution description
 
@@ -43,4 +44,16 @@ Just run the following command:
    I have developed test class for back-end services using Junit and Spring Boot test features. 
  
 
+## Deployment
+   First of all You need to have yarn and npm installed in your pc.Go to the project's folder and then run yarn install to install
+   required packages.
+   
+   For deployment you just need to build the war file first by using the following command :
+     ./mvnw package -Pprod 
+   war file would be ready after passing all tests.
+   
+   For building war file without runing test cases :
+      ./mvnw package -Pprod -Dmaven.test.skip=true
+      
+   You can run the war file by simply using command java -jar web-page-element-analyser-0.0.1-SNAPSHOT.jar
 

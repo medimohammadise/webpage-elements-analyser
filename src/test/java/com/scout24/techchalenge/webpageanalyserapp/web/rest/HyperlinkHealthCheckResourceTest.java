@@ -21,6 +21,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes = WebPageElementAnalyserApp.class)
 public class HyperlinkHealthCheckResourceTest {
     private static final String GITHUB_LOGIN_URL = "https://github.com/login";
+    private static final String MEINSPIEGEL_LOGIN_URL = "https://www.spiegel.de/meinspiegel/login.html";
+    private static final String SCOUT24_WEB_SITE_HOME_PAGE = "https://www.scout24.com/en/Home.aspx";
+
     private MockMvc restUserMockMvc;
 
     @Autowired
@@ -31,22 +34,38 @@ public class HyperlinkHealthCheckResourceTest {
         MockitoAnnotations.initMocks(this);
         HyperLinkHealthCheckResource hyperLinkHealthCheckResource = new HyperLinkHealthCheckResource(hyperLinkHealthCheckService);
         this.restUserMockMvc = MockMvcBuilders.standaloneSetup(hyperLinkHealthCheckResource)
-            /*.setCustomArgumentResolvers(pageableArgumentResolver)
-            .setControllerAdvice(exceptionTranslator)
-            .setMessageConverters(jacksonMessageConverter)*/
             .build();
     }
 
     @Test
-    public void analyseWebPageWithLoginPage() throws Exception {
+    public void analyseWebPageWithGitHubLoginPage() throws Exception {
         restUserMockMvc.perform((get("/api/hyperLinksHealth")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .param("url",GITHUB_LOGIN_URL)
-             ))
+            .param("url", GITHUB_LOGIN_URL)
+        ))
             .andExpect(status().isOk())
-            .andExpect(jsonPath("$",hasSize(13)))
+            .andExpect(jsonPath("$", hasSize(13)))
 
-            ;
+        ;
     }
 
+    @Test
+    public void analyseWebPageWithMeinSpiegelPage() throws Exception {
+        restUserMockMvc.perform((get("/api/hyperLinksHealth")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .param("url", MEINSPIEGEL_LOGIN_URL)
+        ))
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$", hasSize(265)));
+    }
+
+    @Test
+    public void analyseWebPageWithScout24WebSiteHomePage() throws Exception {
+        restUserMockMvc.perform((get("/api/hyperLinksHealth")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .param("url", SCOUT24_WEB_SITE_HOME_PAGE)
+        ))
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$", hasSize(132)));
+    }
 }

@@ -29,7 +29,8 @@ public class WebPageAnayserService {
         String[] schemes = {"http", "https"};
         UrlValidator urlValidator = new UrlValidator(schemes);
         if (!urlValidator.isValid(url)) throw new InputDataInvalidException();
-        this.document = Jsoup.connect(url).timeout(10 * 1000).validateTLSCertificates(false).get();
+        //default timeout is 1 minute web pages that is loading less than one minute could not be processed
+        this.document = Jsoup.connect(url).timeout(60 * 1000).validateTLSCertificates(false).get();
         this.url = url;
     }
 

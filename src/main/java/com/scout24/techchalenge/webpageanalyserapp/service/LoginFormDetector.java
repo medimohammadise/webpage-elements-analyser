@@ -33,7 +33,7 @@ public class LoginFormDetector {
         String strActionURL = document.select("form").attr("action");
         Elements inputElementsInsideForm = document.select("form").select("input");
 
-        return (inputElementsInsideForm.stream().filter(element -> "password".equals(element.attr("type"))).findFirst().isPresent() &&
+        return (!"".equals(strActionURL) && inputElementsInsideForm.stream().filter(element -> "password".equals(element.attr("type"))).findFirst().isPresent() &&
             inputElementsInsideForm.stream().filter(element -> "text".equals(element.attr("type"))).findFirst().isPresent());
 
     }
@@ -46,7 +46,7 @@ public class LoginFormDetector {
             loginPageResponse = Jsoup.connect(url)
                 .validateTLSCertificates(false)
                 .userAgent("Mozilla/5.0")
-                .timeout(10 * 1000)
+                .timeout(60 * 1000)
                 .followRedirects(true)
                 .execute();
         } catch (IOException e) {
@@ -55,7 +55,7 @@ public class LoginFormDetector {
 
         }
 
-        System.out.println("Fetched login page");
+        log.info("Fetched login page");
 
         //get the cookies from the response, which we will post to the action URL
         Map<String, String> mapLoginPageCookies = loginPageResponse.cookies();
@@ -71,12 +71,14 @@ public class LoginFormDetector {
         Elements inputElementsInsideForm = document.select("form").select("input");
 
         //lets make data map containing all the parameters and its values found in the form
+        log.info("extracting form elements : ");
         Map<String, String> mapParams = new HashMap<String, String>();
         inputElementsInsideForm.stream().filter(inputElement -> !inputElement.attr("name").isEmpty()).forEach(inputElement -> {
             mapParams.put(inputElement.attr("name"), (inputElement.attr("value")));
-            System.out.println("Key " + inputElement.attr("name") + " Value " + inputElement.attr("value"));
+            log.info(("Key " + inputElement.attr("name") + " Value " + inputElement.attr("value")));
         });
 
+        //just put something to see what will happen after try for login
         mapParams.put("f.loginName", "DummyUsername");
         mapParams.put("f.password", "Dummypassword");
         URL aURL = null;
@@ -86,7 +88,7 @@ public class LoginFormDetector {
             log.debug("Error for pasring login page : "+ e.getMessage());
             return false;
         }
-        System.out.println("actionURL " + strActionURL);
+
         String domain = aURL.getHost();
         Response responsePostLogin = null;
         try {
@@ -97,7 +99,7 @@ public class LoginFormDetector {
                 //user agent
                 .userAgent("Mozilla/5.0")
                 //connect and read time out
-                .timeout(10 * 1000)
+                .timeout(60 * 1000)
                 //post parameters
                 .data(mapParams)
                 //cookies received from login page
@@ -113,7 +115,7 @@ public class LoginFormDetector {
 
         }
 
-        System.out.println("HTTP Status Code: " + responsePostLogin.statusCode());
+        log.info("HTTP Status Code after trying to login for url " +url+ " is : " +responsePostLogin.statusCode());
 
         //parse the document from response
         Document afterLogindocument = null;
