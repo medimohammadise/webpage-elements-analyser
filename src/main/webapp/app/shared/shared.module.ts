@@ -2,19 +2,14 @@ import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { NgbDateAdapter } from '@ng-bootstrap/ng-bootstrap';
 
 import { NgbDateMomentAdapter } from './util/datepicker-adapter';
-import {
-    WebPageElementAnalyserSharedLibsModule,
-    WebPageElementAnalyserSharedCommonModule,
-    JhiLoginModalComponent,
-    HasAnyAuthorityDirective
-} from './';
+import { WebPageElementAnalyserSharedLibsModule, WebPageElementAnalyserSharedCommonModule } from './';
 
 @NgModule({
     imports: [WebPageElementAnalyserSharedLibsModule, WebPageElementAnalyserSharedCommonModule],
-    declarations: [JhiLoginModalComponent, HasAnyAuthorityDirective],
+    declarations: [],
     providers: [{ provide: NgbDateAdapter, useClass: NgbDateMomentAdapter }],
-    entryComponents: [JhiLoginModalComponent],
-    exports: [WebPageElementAnalyserSharedCommonModule, JhiLoginModalComponent, HasAnyAuthorityDirective],
+    entryComponents: [],
+    exports: [WebPageElementAnalyserSharedCommonModule],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class WebPageElementAnalyserSharedModule {}

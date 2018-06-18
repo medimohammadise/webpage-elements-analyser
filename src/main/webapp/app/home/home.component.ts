@@ -14,23 +14,13 @@ export class HomeComponent implements OnInit {
     account: Account;
     modalRef: NgbModalRef;
     url: string;
-    errorProcessingRequest: boolean = false;
+    errorProcessingRequest: Boolean = false;
     errorMessage: String;
     webPageDcoumentMetaData: IWebPageDcoumentMetaData;
     hyperLinksHealthStatus: IHyperLinksHealthStatus;
-    metaDataAnalyseInProgress: boolean = false;
-    hyperLinkHealthAnalysisInProgress: boolean = false;
-    cols: any[];
-
-    ngOnInit() {
-        this.cols = [
-            { field: 'caseId', header: 'Case Id' },
-            { field: 'caseType', header: 'Case Type' },
-            { field: 'caseCreationDate', header: 'Case Creation Date' },
-            { field: 'status', header: 'Status' },
-            { field: 'policyNumber', header: 'Policy Number' }
-        ];
-    }
+    metaDataAnalyseInProgress: Boolean = false;
+    hyperLinkHealthAnalysisInProgress: Boolean = false;
+    ngOnInit() {}
     constructor(private webPageAnalyseService: WebPageAnalyseService, private eventManager: JhiEventManager) {}
     analyse() {
         this.webPageDcoumentMetaData = null;
@@ -46,14 +36,12 @@ export class HomeComponent implements OnInit {
                 this.errorProcessingRequest = true;
                 this.errorMessage = error.title;
                 this.metaDataAnalyseInProgress = false;
-                console.log('metaDataAnalyseInProgress ' + this.metaDataAnalyseInProgress);
             }
         );
         this.hyperLinkHealthAnalysisInProgress = true;
         this.webPageAnalyseService.gethyperLinksHealthData(this.url).subscribe(
             data => {
                 this.hyperLinksHealthStatus = data.body;
-                console.log(this.hyperLinksHealthStatus);
                 this.hyperLinkHealthAnalysisInProgress = false;
             },
             error => {
